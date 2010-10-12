@@ -10,7 +10,7 @@ namespace :jroutes do
     system("rm #{Jroutes::JS_TARGET}")
     system("cp #{Jroutes::JS_SOURCE} #{Jroutes::JS_TARGET}")
     
-    puts "generating routes..."
+    puts "parsing routes..."
     #
     # run the rake task 'rake routes' and store output in temp file
     # then parse the tempfile reading all anmed routes into an array of lines
@@ -21,7 +21,7 @@ namespace :jroutes do
     
     named_routes = {}
     File.open(file.path, "r") do |file|
-      exp = /\{:controller=>\".*\", :action=>\".*\"\}\s*$/
+      exp = /(\{.*\}\s*)$/
       while (line = file.gets)
         next unless (line.match(exp))
         line.gsub!(exp, "")
@@ -33,6 +33,7 @@ namespace :jroutes do
     end
     lines = named_routes.map{ |k, v| "Router.pushRoute('#{k}', '#{v}')" }
 
+    puts lines
     puts "writing routes..."
     #
     # append the named routes to javascript file
