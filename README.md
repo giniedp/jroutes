@@ -45,8 +45,9 @@ Arguments that do not match the url parameters will be appended do the result
     Router.example_path({ foo : "foo", bar : "bar", id : "1"}) // => "/foo/foo/bar/bar?id=1"
    
 To customize the host settings use the Router.settings object
-    Router.settings.protocol = "http"
-    Router.settings.host = "localhost"
-    Router.settings.port = "3000"
+    Router.settings.protocol = "http"         // protocol to use
+    Router.settings.host = "www.example.com"  // host to use
+    Router.settings.port = "3000"             // port to use
+    Router.settings.path = ""                 // base path to use
 These settings will be used to generate urls. If the settings are not set the Router
 will use the protocol, host and port from *window.location*
