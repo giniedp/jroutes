@@ -1,4 +1,5 @@
 require 'rake'
+require File.join(File.dirname(__FILE__), "..", "jroutes.rb")
 
 namespace :jroutes do
   desc "generate"
@@ -20,9 +21,10 @@ namespace :jroutes do
     
     named_routes = {}
     File.open(file.path, "r") do |file|
+      exp = /\{:controller=>\".*\", :action=>\".*\"\}\s*$/
       while (line = file.gets)
-        next unless (line.match(/\{:controller=>\"\w+\", :action=>\"\w*\"\}\s*$/))
-        line.gsub!(/\{:controller=>\"\w+\", :action=>\"\w*\"\}\s*$/, "")
+        next unless (line.match(exp))
+        line.gsub!(exp, "")
         line = line.split(" ")
         name = line[0]
         path = (line.length == 3 ? line[2] : line[1])
