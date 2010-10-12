@@ -13,7 +13,7 @@ Install the plugin into vendor/plugins:
     rails plugin install git@github.com:giniedp/jroutes.git
 run
     rake jroutes:generate 
-This will generate the following file 
+This will generate (**overwrite**) the following file 
     public/javascripts/jroutes.js
 Include the jroute.js in your application layout or wherever you need the routes
     javascript_include_tag 'jroutes'
