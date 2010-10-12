@@ -20,25 +20,23 @@ Include the jroute.js in your application layout or wherever you need the routes
     
 Usage
 =====
-Whenever you have changed your routes don't forget to run
+Whenever you have changed your routes don't forget to synchronize the javascript routes with:
     rake jroutes:generate
-to synchronize the javascript routes.
-Now you can use your application routes in your javascript:
-    Router.foo_bar_path()
-    Router.foo_bar_url()
-which returns the path or the url of the route *foo_bar*
+All your named routes of your application become available as javascript methods:
+    Router.foo_bar_path() // gets the path of the 'foo_bar' route
+    Router.foo_bar_url()  // gets the url with pprotocole, host and port of the 'foo_bar' route
 
 You can also pass arguments to fill required and optional url parameters. Named arguments are supported.
     Router.foo_bar_path("foo", 1)
     Router.foo_bar_path({ controller : "foo", id : 1 })
 
-You can push routes yourself using:
+You can push routes yourself with:
     Router.pushRoute("example", "/foo/:foo/bar/:bar")
-Then the following methods will be then available:
+This adds the following Router methods:
     Router.example_path()
     Router.example_url()
     
-Routes with optional parameters are also supported, like you are used to from rails
+Routes with optional parameters are also supported, like you are used to from rails:
     Router.pushRoute("example", "/foo/:foo(/bar/:bar)")
     Router.example_path("test")                 // => "/foo/test"
     Router.example_path("test", "anotherTest")  // => "/foo/test/bar/anotherTest"
@@ -46,3 +44,9 @@ Routes with optional parameters are also supported, like you are used to from ra
 Arguments that do not match the url parameters will be appended do the result
     Router.example_path({ foo : "foo", bar : "bar", id : "1"}) // => "/foo/foo/bar/bar?id=1"
    
+To customize the host settings use the Router.settings object
+    Router.settings.protocol = "http"
+    Router.settings.host = "localhost"
+    Router.settings.port = "3000"
+These settings will be used to generate urls. If the settings are not set the Router
+will use the protocol, host and port from *window.location*
