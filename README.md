@@ -13,46 +13,36 @@ Install the plugin into vendor/plugins:
     rails plugin install git@github.com:giniedp/jroutes.git
 run
     rake jroutes:generate 
-This will generate a file in 
+This will generate the following file 
     public/javascripts/jroutes.js
-Include the javascript in your application layout or wherever you need the routes
+Include the jroute.js in your application layout or wherever you need the routes
+    javascript_include_tag 'jroutes'
     
 Usage
 =====
 Whenever you have changed your routes don't forget to run
     rake jroutes:generate
 to synchronize the javascript routes.
-Now you can use your routenames from your application in your javascript:
+Now you can use your application routes in your javascript:
     Router.foo_bar_path()
-or
     Router.foo_bar_url()
-which returns the path or the url of the route "foo_bar"
+which returns the path or the url of the route *foo_bar*
 
-You can also pass arguments to fill required and optional url parameters
+You can also pass arguments to fill required and optional url parameters. Named arguments are supported.
     Router.foo_bar_path("foo", 1)
-You can pass named arguments to fill url parameters
-    Router.foo_bar_path({ controller : "foo", id : 1, action : "bar" })
+    Router.foo_bar_path({ controller : "foo", id : 1 })
 
-If you don't want to run the generator, you can push routes yourself with:
+You can push routes yourself using:
     Router.pushRoute("example", "/foo/:foo/bar/:bar")
-Then the following methods will be available
+Then the following methods will be then available:
     Router.example_path()
-and
     Router.example_url()
     
-It is also possible to add routes with optional arguments:
+Routes with optional parameters are also supported, like you are used to from rails
     Router.pushRoute("example", "/foo/:foo(/bar/:bar)")
-Then running 
-    Router.example_path("test")
-will result in
-    "/foo/test"
-By running 
-    Router.example_path("test", "anotherTest")
-will result in
-    "/foo/test/bar/anotherTest"
+    Router.example_path("test")                 // => "/foo/test"
+    Router.example_path("test", "anotherTest")  // => "/foo/test/bar/anotherTest"
 
 Arguments that do not match the url parameters will be appended do the result
-    Router.example_path({ foo : "foo", bar : "bar", id : "1"})
-results in
-    "/foo/foo/bar/bar?id=1"
+    Router.example_path({ foo : "foo", bar : "bar", id : "1"}) // => "/foo/foo/bar/bar?id=1"
    
