@@ -1,0 +1,69 @@
+<html>
+ <head>
+  <title>Test Page for jRoutes</title>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script type="text/javascript" src="http://github.com/jquery/qunit/raw/master/qunit/qunit.js"></script>
+  <script language="javascript" src="../javascripts/jroutes.js"></script>
+  <link rel="stylesheet" href="http://github.com/jquery/qunit/raw/master/qunit/qunit.css" type="text/css" media="screen" />
+  <script language="javascript">
+  
+  $(document).ready(function(){
+    
+    test("Pushing routes", function() {
+      same(Router.Routes, {}, "Routes should be empty on startup");
+      
+      Router.pushRoute("example", "/foo/:foo/bar/:bar");
+      same(Router.Routes, { "example" : "/foo/:foo/bar/:bar" }, "Route should be added to Router.Routes object");
+      
+      Router.pushRoute("example", "/bar/:bar/foo/:foo");
+      same(Router.Routes, { "example" : "/bar/:bar/foo/:foo" }, "Same path should override old route");
+    });
+    
+    test("Resolving routes", function(){
+      Router.pushRoute("example", "/foo/:foo/bar/:bar");
+      
+      equals(Router.example_path(1, 1), "/foo/1/bar/1", "Resolve basic route");
+    });
+    
+    test("Resolving routes with optional parameters", function(){
+      Router.pushRoute("example", "/foo/:foo(/bar/:bar)");
+      
+      equals(Router.example_path(1), "/foo/1", "Optional parameter should not occur in result");
+      equals(Router.example_path(1, 1), "/foo/1/bar/1", "Optional parameter should occur in result");
+      
+      Router.pushRoute("example", "/foo/:foo(/bar/:bar(/:test))");
+      equals(Router.example_path(1), "/foo/1", "Optional parameter should not occur in result");
+      equals(Router.example_path(1, 1), "/foo/1/bar/1", "Last optional parameter should not occur in result");
+      equals(Router.example_path(1, 1, 1), "/foo/1/bar/1/1", "Optional parameter should not occur in result");
+      
+      Router.pushRoute("example", "/foo/:foo(/bar/:bar(/:test))(.:format)");
+      equals(Router.example_path(1), "/foo/1", "Optional parameter should not occur in result");
+      equals(Router.example_path(1, 1), "/foo/1/bar/1", "Last optional parameter should not occur in result");
+      equals(Router.example_path(1, 1, 1), "/foo/1/bar/1/1", "Optional parameter should not occur in result");
+      equals(Router.example_path(1, 1, 1, "html"), "/foo/1/bar/1/1.html", "");
+    });
+    
+    test("Resolving routes using named parameters", function(){
+      Router.pushRoute("example", "/foo/:foo(/bar/:bar)");
+      
+      equals(Router.example_path({ foo : "foo" }), "/foo/foo", "'foo' should be set, but not 'bar'");
+      equals(Router.example_path({ bar : "bar" }), "/foo//bar/bar", "'bar' should be set, but not 'foo'");
+
+      Router.pushRoute("example", "/foo/:foo(/bar/:bar(/:test))(.:format)");
+      equals(Router.example_path({ foo : "foo", format : "html" }), "/foo/foo.html", "Foo and format should be set");
+    });
+  });
+  
+  </script>
+  
+ </head>
+ <body>
+  
+ <h1 id="qunit-header">jRoutes QUnit tests</h1>
+ <h2 id="qunit-banner"></h2>
+ <h2 id="qunit-userAgent"></h2>
+ <ol id="qunit-tests"></ol>
+ <div id="qunit-fixture"></div>
+
+ </body>
+</html>
