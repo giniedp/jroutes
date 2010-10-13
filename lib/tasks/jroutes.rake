@@ -1,45 +1,40 @@
 require 'rake'
-require File.join(File.dirname(__FILE__), "..", "jroutes.rb")
 
 namespace :jroutes do
-  desc "generate"
-  task :generate do
-    #
-    # copy the jroutes.js file to public javascripts
-    #
-    system("rm #{Jroutes::JS_TARGET}")
-    system("cp #{Jroutes::JS_SOURCE} #{Jroutes::JS_TARGET}")
+  desc "generates javascript routes"
+  task :generate => :environment do 
+    puts "generating jRoutes..."
     
-    puts "parsing routes..."
-    #
-    # run the rake task 'rake routes' and store output in temp file
-    # then parse the tempfile reading all anmed routes into an array of lines
-    #
-
-    file = Tempfile.new("routes")
-    system("rake routes > #{file.path}")
+    Rails.application.reload_routes!
+    all_routes = Rails.application.routes.routes
     
-    named_routes = {}
-    File.open(file.path, "r") do |file|
-      exp = /(\{.*\}\s*)$/
-      while (line = file.gets)
-        next unless (line.match(exp))
-        line.gsub!(exp, "")
-        line = line.split(" ")
-        name = line[0]
-        path = (line.length == 3 ? line[2] : line[1])
-        named_routes[name] = path
-      end
+    routes = all_routes.collect do |route|
+      reqs = route.requirements.dup
+      reqs[:to] = route.app unless route.app.class.name.to_s =~ /^ActionDispatch::Routing/
+      reqs = reqs.empty? ? "" : reqs.inspect
+      {:name => route.name.to_s, :path => route.path}
     end
-    lines = named_routes.map{ |k, v| "Router.pushRoute('#{k}', '#{v}')" }
-
-    puts lines
-    puts "writing routes..."
-    #
-    # append the named routes to javascript file
-    #
-    File.open(Jroutes::JS_TARGET, 'a') do |f|
+    
+    routes.reject! { |r| r[:path] =~ %r{/rails/info/properties} } # Skip the route if it's internal info route
+    routes.reject! { |r| r[:name].blank? }
+    lines = routes.map{ |r| "Router.pushRoute('#{r[:name]}', '#{r[:path]}')" }.uniq!
+    
+    js_source = File.join(File.dirname(__FILE__), '..', 'javascripts', 'jroutes.js')
+    js_target = Rails.root.join('public', 'javascripts', 'jroutes.js')
+    js_min = Rails.root.join('public', 'javascripts', 'jroutes.min.js')
+    
+    File.delete(js_target) if File.exists?(js_target)
+    
+    File.open(js_target, 'w') do |f|
+      File.open(js_source, "r") do |file|
+        while (line = file.gets)
+          f.print(line)
+        end
+      end
+      f.print("\n")
       f.print lines.join("\n")
     end
+    
+    puts "...done"
   end
 end
