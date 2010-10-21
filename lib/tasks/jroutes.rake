@@ -23,7 +23,7 @@ namespace :jroutes do
     
     routes.reject! { |r| r[:path] =~ %r{/rails/info/properties} } # Skip the route if it's internal info route
     routes.reject! { |r| r[:name].blank? }
-    lines = routes.map{ |r| "Router.pushRoute('#{r[:name]}', '#{r[:path]}')" }.uniq!
+    lines = routes.map{ |r| "Router.pushRoute('#{r[:name]}', '#{r[:path]}');" }.uniq!
     
 
     
