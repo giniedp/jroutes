@@ -2,6 +2,10 @@ jroutes
 =====================================================
 This plugin enables named routes of your rails application in your javascript.
 
+Requirements
+=====
+Rails3
+
 Installation
 =====
 In your Gemfile
@@ -23,10 +27,6 @@ This will generate (**overwrite**) the following file
 Include the jroute.js in your application layout or wherever you need the routes
 
     = javascript_include_tag 'jroutes'
-    
-Requirements
-=====
-Rails3
 
 Usage
 =====
