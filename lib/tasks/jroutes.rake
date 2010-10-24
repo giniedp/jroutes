@@ -1,15 +1,15 @@
 require 'rake'
 require 'net/http'
 require 'uri'
-
-js_source = File.join(File.dirname(__FILE__), '..', 'javascripts', 'jroutes.js')
-js_target = Rails.root.join('public', 'javascripts', 'jroutes.js')
-js_min = Rails.root.join('public', 'javascripts', 'jroutes.min.js')
     
 namespace :jroutes do
   desc "generates javascript routes"
   task :generate => :environment do 
     puts "- generating jRoutes"
+
+    js_source = File.join(File.dirname(__FILE__), '..', 'javascripts', 'jroutes.js')
+    js_target = Rails.root.join('public', 'javascripts', 'jroutes.js')
+    js_min = Rails.root.join('public', 'javascripts', 'jroutes.min.js')    
     
     Rails.application.reload_routes!
     all_routes = Rails.application.routes.routes
@@ -24,8 +24,6 @@ namespace :jroutes do
     routes.reject! { |r| r[:path] =~ %r{/rails/info/properties} } # Skip the route if it's internal info route
     routes.reject! { |r| r[:name].blank? }
     lines = routes.map{ |r| "Router.pushRoute('#{r[:name]}', '#{r[:path]}');" }.uniq!
-    
-
     
     File.delete(js_target) if File.exists?(js_target)
     
@@ -44,6 +42,10 @@ namespace :jroutes do
   
   desc "generates minified javascript routes"
   task :minified => [:environment, :generate] do 
+    
+    js_source = File.join(File.dirname(__FILE__), '..', 'javascripts', 'jroutes.js')
+    js_target = Rails.root.join('public', 'javascripts', 'jroutes.js')
+    js_min = Rails.root.join('public', 'javascripts', 'jroutes.min.js')    
     
     lines = []
     File.open(js_target, 'r') do |f|

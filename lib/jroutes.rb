@@ -1,9 +1,11 @@
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-	ignorecase = true
-[remote "origin"]
-	url = git@github.com:giniedp/jroutes.git
-	fetch = +refs/heads/*:refs/remotes/origin/*
+# enables rake tasks in the final application
+Dir["#{Gem.searcher.find('fancygrid').full_gem_path}/**/tasks/*.rake"].each { |ext| load ext }
+
+module Jroutes
+
+  class Railtie < Rails::Railtie
+    initializer "jroutes.initialize" do |app|
+      # nothing to do
+    end
+  end
+end

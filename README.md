@@ -1,23 +1,33 @@
 jroutes
 =====================================================
-
-This plugin enables spriteanimation on your website. It requires a series of 
-images stiched together into a single spritesheet and is able to play these 
-images frame by frame which results in an animation. The aim of this plugin is
-to provide a 360° view of some kind of product. There is no flash needed, 
-everything is done with javascript and the jQuery framework.
+This plugin enables named routes of your rails application in your javascript.
 
 Installation
 =====
-Install the plugin into vendor/plugins:
-    rails plugin install git@github.com:giniedp/jroutes.git
-run
-    rake jroutes:generate 
-This will generate (**overwrite**) the following file 
-    public/javascripts/jroutes.js
-Include the jroute.js in your application layout or wherever you need the routes
-    javascript_include_tag 'jroutes'
+In your Gemfile
+
+    gem :jroutes, :git => git://github.com/giniedp/jroutes.git
+
+Then run
     
+    bundle install
+    
+and
+
+    rake jroutes:generate 
+    
+This will generate (**overwrite**) the following file 
+
+    public/javascripts/jroutes.js
+    
+Include the jroute.js in your application layout or wherever you need the routes
+
+    = javascript_include_tag 'jroutes'
+    
+Requirements
+=====
+Rails3
+
 Usage
 =====
 Whenever you have changed your routes don't forget to synchronize the javascript routes with:
@@ -51,3 +61,8 @@ To customize the host settings use the Router.settings object
     Router.settings.path = ""                 // base path to use
 These settings will be used to generate urls. If the settings are not set the Router
 will use the protocol, host and port from *window.location*
+
+Copyright
+=====
+
+Copyright (c) 2010 Alexander Gräfenstein. See LICENSE for details.
