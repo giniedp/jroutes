@@ -10,7 +10,7 @@ Installation
 =====
 In your Gemfile
 
-    gem :jroutes, :git => git://github.com/giniedp/jroutes.git
+    gem 'jroutes', :git => 'git://github.com/giniedp/jroutes.git'
 
 Then run
     

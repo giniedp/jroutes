@@ -1,5 +1,5 @@
 # enables rake tasks in the final application
-Dir["#{Gem.searcher.find('fancygrid').full_gem_path}/**/tasks/*.rake"].each { |ext| load ext }
+Dir["#{Gem.searcher.find('jroutes').full_gem_path}/**/tasks/*.rake"].each { |ext| load ext }
 
 module Jroutes
 
