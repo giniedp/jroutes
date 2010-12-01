@@ -4,7 +4,7 @@ Jroutes.setup do |config|
   # Set the path to the output javascript file
   # default is "public/javascripts/jquery.jroutes"
   #
-  config.output_path = "public/javascripts/jquery.jroutes"
+  config.output_path = "public/javascripts/jquery.jroutes.js"
   
   # If true the javascript routes will be generated on application startup
   #

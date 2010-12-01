@@ -18,20 +18,32 @@ Then run
     
 and
 
-    rake jroutes:generate 
+    rails generate jroutes:install
     
-This will generate (**overwrite**) the following file 
+This will generate (**overwrite**) an initializer at
 
-    public/javascripts/jroutes.js
+    config/initializers/jroutes.rb
     
-Include the jroute.js in your application layout or wherever you need the routes
+Modify that file with your settings
 
-    = javascript_include_tag 'jroutes'
+    Jroutes.setup do |config|
+      # Set the javascript output file path
+      config.output_path = "public/javascripts/jquery.jroutes.js"
+      
+      # If true, the javascript routes will be generated on application startup
+      config.build_on_boot = false
+    end
 
+Include the javascript in your application layout or wherever you need the routes
+
+    = javascript_include_tag 'jquery.jroutes'
+
+You can also use a generator to build the route file
+
+    rails generate jroutes:regenerate
+    
 Usage
 =====
-Whenever you have changed your routes don't forget to synchronize the javascript routes with:
-    rake jroutes:generate
 All your named routes of your application become available as javascript methods:
     Router.foo_bar_path() // gets the path of the 'foo_bar' route
     Router.foo_bar_url()  // gets the url with protocol, host and port of the 'foo_bar' route
