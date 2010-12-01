@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alexander Gr\303\244fenstein"]
-  s.date = %q{2010-10-24}
+  s.date = %q{2010-12-01}
   s.description = %q{}
   s.email = %q{giniedp@online.de}
   s.extra_rdoc_files = [
@@ -19,14 +19,17 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     ".rvmrc",
      "LICENSE",
      "README.md",
      "Rakefile",
      "VERSION",
      "jroutes.gemspec",
+     "lib/generators/install_generator.rb",
+     "lib/generators/regenerate_generator.rb",
      "lib/javascripts/jroutes.js",
      "lib/jroutes.rb",
-     "lib/tasks/jroutes.rake",
+     "lib/templates/jroutes.rb",
      "test/jroutes.html"
   ]
   s.homepage = %q{http://github.com/giniedp/jroutes}
