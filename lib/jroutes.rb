@@ -5,7 +5,7 @@ module Jroutes
   @@source_path = File.join(File.dirname(__FILE__), 'javascripts', 'jroutes.js')
     
   mattr_accessor :output_path
-  @@output_path = "public/javascripts/jquery.jroutes.js"
+  @@output_path = "public/javascripts/jroutes.js"
 
   mattr_accessor :build_on_boot
   @@build_on_boot = false

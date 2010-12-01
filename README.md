@@ -28,7 +28,7 @@ Modify that file with your settings
 
     Jroutes.setup do |config|
       # Set the javascript output file path
-      config.output_path = "public/javascripts/jquery.jroutes.js"
+      config.output_path = "public/javascripts/jroutes.js"
       
       # If true, the javascript routes will be generated on application startup
       config.build_on_boot = false
@@ -36,7 +36,7 @@ Modify that file with your settings
 
 Include the javascript in your application layout or wherever you need the routes
 
-    = javascript_include_tag 'jquery.jroutes'
+    = javascript_include_tag 'jroutes'
 
 You can also use a generator to build the route file
 
