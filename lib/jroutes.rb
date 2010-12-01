@@ -16,7 +16,8 @@ module Jroutes
   
   class Railtie < Rails::Railtie
     generators do
-      require File.join(File.dirname(__FILE__), "generators", "generator.rb")
+      require File.join(File.dirname(__FILE__), "generators", "install_generator.rb")
+      require File.join(File.dirname(__FILE__), "generators", "regenerate_generator.rb")
     end
     
     initializer "jroutes.initialize" do |app|
