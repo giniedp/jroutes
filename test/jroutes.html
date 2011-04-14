@@ -52,6 +52,14 @@
       Router.pushRoute("example", "/foo/:foo(/bar/:bar(/:test))(.:format)");
       equals(Router.example_path({ foo : "foo", format : "html" }), "/foo/foo.html", "Foo and format should be set");
     });
+    
+    test("Pushing different route names", function(){
+      Router.pushRoute("foo", "/foo");
+      Router.pushRoute("bar", "/bar");
+      
+      equals(Router.foo_path(), "/foo", "'foo_path' should return '/foo'");
+      equals(Router.bar_path(), "/bar", "'bar_path' should return '/bar'");
+    });
   });
   
   </script>
