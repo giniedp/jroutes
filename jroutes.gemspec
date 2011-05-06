@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{jroutes}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alexander Gr\303\244fenstein"]
-  s.date = %q{2011-04-14}
+  s.date = %q{2011-05-06}
   s.description = %q{}
   s.email = %q{giniedp@online.de}
   s.extra_rdoc_files = [
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
     "lib/generators/install_generator.rb",
     "lib/generators/regenerate_generator.rb",
     "lib/javascripts/jroutes.js",
+    "lib/javascripts/jroutes.min.js",
     "lib/jroutes.rb",
     "lib/templates/jroutes.rb",
     "test/jroutes.html"
