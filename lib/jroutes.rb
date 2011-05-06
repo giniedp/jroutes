@@ -54,7 +54,7 @@ module Jroutes
       lines = []
       lines << "(function(){"
       lines << "  var Router = this.Router;"
-      lines = routes.map{ |r| "  Router.pushRoute('#{r[:name]}', '#{r[:path]}');" }.uniq
+      lines += routes.map{ |r| "  Router.pushRoute('#{r[:name]}', '#{r[:path]}');" }.uniq
       lines << "}());"
       
       File.delete(js_target) if File.exists?(js_target)
