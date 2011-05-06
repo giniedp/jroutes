@@ -51,7 +51,11 @@ module Jroutes
       
       js_source = Jroutes.source_path
       js_target = Jroutes.output_path
-      lines = routes.map{ |r| "Router.pushRoute('#{r[:name]}', '#{r[:path]}');" }.uniq
+      lines = []
+      lines << "(function(){"
+      lines << "  var Router = this.Router;"
+      lines = routes.map{ |r| "  Router.pushRoute('#{r[:name]}', '#{r[:path]}');" }.uniq
+      lines << "}());"
       
       File.delete(js_target) if File.exists?(js_target)
       
